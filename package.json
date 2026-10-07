@@ -1,6 +1,7 @@
 {
   "name": "pipeline-lab",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test-storybook": "vitest run --project=storybook"
   },
   "dependencies": {
     "next": "16.3.8",
