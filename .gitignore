@@ -48,3 +48,7 @@ storybook-static
 .idea/
 *.swp
 .claude/
+
+# playwright
+/test-results/
+/playwright-report/
