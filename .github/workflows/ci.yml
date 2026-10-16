@@ -58,6 +58,31 @@ jobs:
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test-storybook
 
+  e2e:
+    name: E2E tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      # On CI, playwright.config.ts serves the production build with `pnpm start`
+      - run: pnpm build
+      - run: pnpm test:e2e
+      # Report and traces for failed tests; open a trace with `pnpm exec playwright show-trace`
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
+
   chromatic:
     name: Chromatic
     runs-on: ubuntu-latest
