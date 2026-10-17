@@ -70,3 +70,7 @@ pnpm lint && pnpm exec next typegen && pnpm exec tsc --noEmit && pnpm test && pn
 
 - Locally, `pnpm test:e2e` reuses any server already listening on port 3000. If tests see an old page or the API returns 500, check `ss -ltnp | grep ':3000'` and stop the stale process. In CI this cannot happen: `CI=true` turns off server reuse, so Playwright starts its own (`pnpm start` on the build).
 - On a clean checkout, run `next typegen` before `tsc`, or the `LayoutProps` types are missing.
+- After `pnpm install` changes `node_modules`, restart the dev server. A long-running `next dev` keeps serving from deleted files and returns 500s (check `.next/dev/logs/next-development.log` for `ENOENT`). Next 16 allows only one dev server per project, so you cannot start a second one on another port.
+- `typescript` is intentionally aliased to TS 6 (`npm:@typescript/typescript6`), and `@typescript/native` is TS 7, which provides `tsc`. This is because typescript-eslint does not support TS 7 yet. Do not "fix" the alias.
+- pnpm's `minimumReleaseAge` blocks packages published less than a day ago. Use the previous version; never add `minimumReleaseAgeExclude` entries.
+- `pnpm peers check` warns that eslint-plugin-react, -import and -jsx-a11y want ESLint 9. This is expected; their rules were verified to work under ESLint 10.
