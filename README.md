@@ -9,6 +9,8 @@ A practice repo for learning a full frontend and backend testing pipeline by han
 - pnpm
 - Storybook 10
 - Vitest (`storybook` and `unit` projects)
+- Playwright (end-to-end tests)
+- Chromatic (visual tests)
 - GitHub Actions
 
 ## Project layout
@@ -17,6 +19,7 @@ A practice repo for learning a full frontend and backend testing pipeline by han
 components/       UI components, with stories next to each one
 app/api/todos/    Route handler and its unit tests
 lib/              In-memory todos store
+e2e/              Playwright end-to-end tests
 ```
 
 ## Scripts
@@ -31,26 +34,24 @@ lib/              In-memory todos store
 | `pnpm storybook` | Start Storybook on port 6006 |
 | `pnpm build-storybook` | Build a static Storybook |
 | `pnpm test-storybook` | Run story tests (Vitest `storybook` project) |
+| `pnpm test:e2e` | Run Playwright end-to-end tests |
+| `pnpm test:e2e:ui` | Open Playwright UI mode, slowed down so you can follow along |
 
 ## CI
 
-Three parallel jobs run on every push to `main` and on pull requests:
+Five parallel jobs run on every push to `main` and on pull requests:
 
 - Lint, typecheck, build
 - Unit tests
 - Storybook tests
+- Chromatic
+- E2E tests
 
-All three must pass before merging to `main`.
+Lint, typecheck, build, Unit tests, Storybook tests and E2E tests are required checks on `main`, along with Chromatic's UI Tests check.
 
 ## Roadmap
 
-- Branch protection
 - CODEOWNERS
-- Chromatic
-- Accessibility checks as errors
-- Autodocs
-- Playwright end-to-end tests
-- AGENTS.md rules
 
 ## License
 
